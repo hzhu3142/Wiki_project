@@ -1,0 +1,36 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Wiki-Create New Page
+{% endblock %}
+
+{% block body %}
+  <br>
+  <h3>Create New Page</h3>
+<div class="container">
+
+
+  {% if message %}
+    <div class="">
+      <br>{{ message }}<br>
+    </div>
+  {% endif %}
+
+  <form class="" action="{% url 'create' %}" method="post">
+    {% csrf_token %}
+    <br>
+    <label for="create_title">Title:</label>
+    <input id ="create_title" type="text" name="title" {% if title %} value="{{title}}" {% endif %}>
+    <br><br>
+    <div class="">
+      <textarea class="form-control" id = "create_content" name = "content" cols="100%" rows="10">
+        {% if content %}{{ content }}{% endif %}
+      </textarea>
+    </div>
+    <br>
+      <input class="save btn btn-info" type="submit" name="" value="Save">
+
+  </form>
+
+</div>
+{% endblock %}
