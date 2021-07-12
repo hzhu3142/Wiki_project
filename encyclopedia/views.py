@@ -1,10 +1,11 @@
 from django import forms
+from django.core.files.storage import default_storage
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from . import util
 from markdown2 import markdown
 import random
+from . import util
 
 
 def index(request):
@@ -52,9 +53,8 @@ def show_item(request, title):
         return render(request, "encyclopedia/error.html",{
             "message": "Page was not found"
             })
-    print("-------------------- 55 line",content)
+
     content = markdown(content)
-    print("-------------------- 57 line",content)
     return render(request, "encyclopedia/entry.html", {
         "title": title,
         "content": content
@@ -66,22 +66,26 @@ def edit(request, title):
 
     if not content:
         return render(request, "encyclopedia/error.html", {
-            "message": "Can't find {{ title }}.Please check again"
+            "message": "Can't find this page.Please check again"
             })
 
     if request.method == "POST":
-        content = request.POST.get("content").strip()
-        if not content:
+        new_title = request.POST.get("title").strip()
+        new_content = request.POST.get("content").strip()
+        if not new_content or not new_title:
             return render(request, "encyclopedia/edit.html", {
                 "message": "Can't save with empty content",
-                "title": title,
-                "content": content
+                "title": new_title,
+                "content": new_content
                 })
-
-        util.save_entry(title, content)
+        if new_title != title:
+                filename = f"entries/{title}.md"
+                if default_storage.exists(filename):
+                    default_storage.delete(filename)
+        util.save_entry(new_title, new_content)
         return render(request, "encyclopedia/entry.html", {
-            "title": title,
-            "content": content
+            "title": new_title,
+            "content": new_content
             })
 
     return render(request, "encyclopedia/edit.html", {

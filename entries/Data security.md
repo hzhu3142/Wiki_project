@@ -1,0 +1,1 @@
+This is the process of protecting data from unauthorized users or hackers.

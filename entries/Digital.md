@@ -1,0 +1,1 @@
+Digital technology is the opposite of analog. It’s anything that uses a computer’s binary language to do its job.

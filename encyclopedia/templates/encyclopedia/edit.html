@@ -7,9 +7,12 @@
 {% block body %}
 
 <div class="">
-  <h1> {{ title }}</h1>
-  <form class="" action="" method="POST">
+  <h1>Edit: </h1>
+  <br><br>
+  <form class="" action="{% url 'edit' title %}" method="POST">
     {% csrf_token %}
+    <input type="text" name="title" value="{{ title }}">
+    <br><br>
     <textarea class="form-control" name="content" rows="8" cols="80">
       {{ content|safe}}
     </textarea>
