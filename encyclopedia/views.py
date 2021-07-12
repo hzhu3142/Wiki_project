@@ -1,6 +1,6 @@
 from django import forms
 from django.core.files.storage import default_storage
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from markdown2 import markdown
@@ -74,7 +74,7 @@ def edit(request, title):
         new_content = request.POST.get("content").strip()
         if not new_content or not new_title:
             return render(request, "encyclopedia/edit.html", {
-                "message": "Can't save with empty content",
+                "message": "Can't save with content",
                 "title": new_title,
                 "content": new_content
                 })

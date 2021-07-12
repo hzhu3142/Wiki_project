@@ -1,1 +1,0 @@
-Analog technology is any piece of technology that does its job without processing numbers electronically like a computer does.
