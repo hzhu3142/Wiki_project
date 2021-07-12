@@ -44,9 +44,36 @@ def randomPage(request):
     pass
 
 
-def show_item(request):
+def show_item(request, title):
     pass
 
+def edit(request, title):
+    content = util.get_entry(title.strip())
+
+    if not content:
+        return render(request, "encyclopedia/error.html", {
+            "message": "Can't find {{ title }}.Please check again"
+            })
+
+    if request.method == "POST":
+        content = request.POST.get("content").strip()
+        if not content:
+            return render(request, "encyclopedia/edit.html", {
+                "meesage": "Can't save with empty content",
+                "title": title,
+                "content": content
+                })
+
+        util.save_entry(title, content)
+        return render(request, "encyclopedia/entry.html", {
+            "title": title,
+            "content": content
+            })
+
+    return render(request, "encyclopedia/edit.html", {
+        "title": title,
+        "content": content
+        })
 
 def search(request):
     pass
