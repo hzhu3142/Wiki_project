@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from . import util
 from markdown2 import markdown
+import random
 
 
 def index(request):
@@ -39,14 +40,16 @@ def create(request):
 
 
 def randomPage(request):
-    pass
+    all_items = util.list_entries()
+    num = random.randint(0, len(all_items)-1)
+    title = all_items[num]
+    return redirect('show_item', title = title)
 
 
 def show_item(request, title):
     content = util.get_entry(title)
 
-    if content == None:
-        print("-----------------51")
+    if not content:
         return render(request, "encyclopedia/error.html",{
             "message": "Page was not found"
             })
