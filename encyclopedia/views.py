@@ -30,8 +30,7 @@ def create(request):
                 })
 
         util.save_entry(create_title, create_content)
-        item = util.get_entry(create_title)
-        item_html = markdowner.convert(item)
+
         return render(request, 'encyclopedia/entry.html', {
             "title":create_title,
             'content':create_content
@@ -53,8 +52,9 @@ def show_item(request, title):
         return render(request, "encyclopedia/error.html",{
             "message": "Page was not found"
             })
-
+    print("-------------------- 55 line",content)
     content = markdown(content)
+    print("-------------------- 57 line",content)
     return render(request, "encyclopedia/entry.html", {
         "title": title,
         "content": content
