@@ -1,0 +1,20 @@
+
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+  Search {{ q }}
+{% endblock %}
+
+
+{% block body %}
+<h1>Related Pages</h1>
+<p>search result for {{ q }}: </p>
+<ul>
+  {% for title in searched %}
+    <a href="{% url 'show_item' title %}"><li>{{ title }}</li></a>
+    {% empty %}
+        <li><p>No item</p></li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

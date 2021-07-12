@@ -1,12 +1,10 @@
 from django import forms
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from . import util
-from markdown2 import Markdown
+from markdown2 import markdown
 
-
-markdowner = Markdown()
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -45,7 +43,20 @@ def randomPage(request):
 
 
 def show_item(request, title):
-    pass
+    content = util.get_entry(title)
+
+    if content == None:
+        print("-----------------51")
+        return render(request, "encyclopedia/error.html",{
+            "message": "Page was not found"
+            })
+
+    content = markdown(content)
+    return render(request, "encyclopedia/entry.html", {
+        "title": title,
+        "content": content
+        })
+
 
 def edit(request, title):
     content = util.get_entry(title.strip())
@@ -59,7 +70,7 @@ def edit(request, title):
         content = request.POST.get("content").strip()
         if not content:
             return render(request, "encyclopedia/edit.html", {
-                "meesage": "Can't save with empty content",
+                "message": "Can't save with empty content",
                 "title": title,
                 "content": content
                 })
@@ -75,5 +86,9 @@ def edit(request, title):
         "content": content
         })
 
+
 def search(request):
-    pass
+    q = request.GET.get('q').strip()
+    if q in util.list_entries():
+        return redirect("show_item", title=q)
+    return render(request, "encyclopedia/search.html", {"searched": util.search(q), "q": q})

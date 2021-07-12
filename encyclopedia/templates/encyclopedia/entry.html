@@ -4,14 +4,13 @@
     Wiki-{{ title }}
 {% endblock %}
 
-{% block body %}
 
+{% block body %}
+<h1>{{ title }}</h1>
 <div class="">
-  <h1> {{ title }}</h1>
-  <div class="">
-    {{ content|safe}}
-  </div>
-  <a class="edit" href="{% url 'edit' title %}">Edit Page</a>
+  {{content | safe}}
 </div>
+
+<a class="" href="{% url 'edit' title %}" style = "align-items: center;">Edit Page</a>
 
 {% endblock %}
