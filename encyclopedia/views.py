@@ -31,7 +31,7 @@ def create(request):
                 })
 
         util.save_entry(create_title, create_content)
-
+        create_content = markdown(create_content)
         return render(request, 'encyclopedia/entry.html', {
             "title":create_title,
             'content':create_content
@@ -74,7 +74,7 @@ def edit(request, title):
         new_content = request.POST.get("content").strip()
         if not new_content or not new_title:
             return render(request, "encyclopedia/edit.html", {
-                "message": "Can't save with content",
+                "message": "Error: Can't save without content",
                 "title": new_title,
                 "content": new_content
                 })

@@ -1,1 +1,0 @@
-Disk storage refers to a computer’s hard drive or long-term memory

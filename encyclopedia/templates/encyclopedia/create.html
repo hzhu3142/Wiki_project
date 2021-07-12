@@ -15,16 +15,16 @@
       <br>{{ message }}<br>
     </div>
   {% endif %}
-
-  <form class="" action="{% url 'create' %}" method="post">
+</div>
+  <form class="container" action="{% url 'create' %}" method="post">
     {% csrf_token %}
     <br>
     <label for="create_title">Title:</label>
     <input id ="create_title" type="text" name="title" {% if title %} value="{{title}}" {% endif %}>
     <br><br>
     <div class="">
-      <textarea class="form-control" id = "create_content" name = "content" cols="100%" rows="10">
-        {% if content %}{{ content }}{% endif %}
+      <textarea class="form-control" name="content" rows="8" cols="30">
+        {% if content %}{{ content|safe }}{% endif %}
       </textarea>
     </div>
     <br>
@@ -32,5 +32,5 @@
 
   </form>
 
-</div>
+
 {% endblock %}
