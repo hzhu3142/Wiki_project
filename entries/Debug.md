@@ -1,0 +1,1 @@
+Debugging refers to the process of finding and removing errors from a program's source code.

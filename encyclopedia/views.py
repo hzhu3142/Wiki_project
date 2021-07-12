@@ -85,7 +85,7 @@ def edit(request, title):
         util.save_entry(new_title, new_content)
         return render(request, "encyclopedia/entry.html", {
             "title": new_title,
-            "content": new_content
+            "content": markdown(new_content)
             })
 
     return render(request, "encyclopedia/edit.html", {
